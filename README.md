@@ -1,4 +1,4 @@
 angular-fis-kit
 ===============
 
-Angular and fis development kits
+One new angular and fis development kits

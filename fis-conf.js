@@ -4,17 +4,6 @@
 	@enimo
 */
 
-// ===== CMD =====
-// cd ./
-// fis server start --root ./dist_tmp/app
-// fis release --watch --live --md5 --dest local-dev
-
-// cd ./
-// npm start # start the server
-// npm run dev # dev and debug
-// npm stop #stop server
-
-
 fis.config.set('project.include', 'app/**');//目前均失效，或放在merge{}配置中
 // app/以外的其他目录修改时，也会进行watch, 也许有编译，但不会cp到to的目录下，也无大碍
 
@@ -33,7 +22,6 @@ fis.config.merge({
 			'**.js' : 'http://js.bdstatic.com',
 			'image' : ['http://img.bdstatic.com'],
 		},
-		//fis release --domain --dest ../build 控制增加domain
 		
 		path : [
 			{
@@ -41,10 +29,6 @@ fis.config.merge({
 				release : '/static/j/$2' // also: '/static/js$&' 或者简化src/下的目录结构
 			},
 			/*
-			{
-				//reg : /^\/(.*\.html)$/i,   //行不通
-				//release : '../$1'  
-			},
 			{
 				reg : '**.css',
 				//useSprite: true, //是否开启合图，在后面单独配置
@@ -179,4 +163,17 @@ fis.config.init({
     }
 });
 */
+
+
+
+// ===== CMD =====
+// cd ./
+// fis server start --root ./dist_tmp/app
+// fis release --watch --live --md5 --dest local-dev
+
+// cd ./
+// npm start # start the server
+// npm run dev # dev and debug
+// npm stop #stop server
+
 

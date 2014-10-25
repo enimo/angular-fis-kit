@@ -1,0 +1,36 @@
+{
+  "name": "angular-fis-kit",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Angular and fis workflow development kits",
+  "repository": "https://github.com/enimo/angular-fis-kit",
+  "license": "MIT",
+  "devDependencies": {
+    "karma": "~0.10",
+    "fis": "^1.8.3",
+    "bower": "^1.3.1"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install",
+
+
+    "start": "fis server start --root ./dist_tmp/app",
+    "dev": "fis release --watch --live --md5 --dest local-dev-tpl,local-dev-static",
+    "stop" : "fis server stop",
+
+    
+    "fis-start": "fis server start --root ./dist_tmp/app",
+    "fis-allstart": "fis server start --root ./dist_tmp/app && fis release --watch --live --md5 --dest local-dev-tpl,local-dev-static",
+    "fis-dev": "fis release --watch --live --md5 --dest local-dev-tpl,local-dev-static",
+    
+    "fis-build-start": "fis server start --root ./dist/app",
+    "fis-build": "fis release --md5 --optimize --pack --domain --dest local-build",
+
+
+    "pretest": "npm install",
+    "test": "karma start karma.conf.js",
+    "test-single-run": "karma start karma.conf.js  --single-run"
+
+  }
+}

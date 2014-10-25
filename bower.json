@@ -1,0 +1,20 @@
+{
+  "name": "angular-fis-kit",
+  "description": "Angular and fis development kits",
+  "version": "0.0.1",
+  "homepage": "https://github.com/enimo/angular-fis-kit",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-loader": "1.2.x",
+    "angular-mocks": "~1.2.x",
+    "bootstrap": "~3.2.0",
+    "html5-boilerplate": "~4.3.0",
+    "underscore": "~1.7.0",
+    "underscore.string": "~2.3.3",
+    "requirejs": "~2.1.4",
+    "zepto": "~1.1.3"
+  }
+}

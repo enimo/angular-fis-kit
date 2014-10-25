@@ -12,7 +12,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "prestart": "npm install",
+    "xxprestart": "npm install",
 
 
     "start": "fis server start --root ./dist_tmp/app",

@@ -38,10 +38,13 @@ this server is:
 ```
 # open root dir
 cd ./
+
 # start the server
 npm start 
+
 # dev and debug
 npm run dev
+
 #stop server if all done 
 npm stop 
 

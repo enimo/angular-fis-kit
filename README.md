@@ -63,6 +63,7 @@ app/                    --> all of the source files for the application
   app.js                --> main application module
   index.html            --> app layout file (the main html template file of the app)
 karma.conf.js         --> config file for running unit tests with Karma
+fis-conf.js         	--> config workflow with fis
 dist/            		--> all compiled file
 dist_tmp/            	--> temporary compiled file for web server debug
 kit/            		--> some kit shell script, e.g. start webserver, compile and debug etc.

@@ -10,19 +10,19 @@ projects.
 
 ## Getting Started
 
-To get you started you can simply clone the angular-seed repository and install the dependencies:
+To get you started you can simply clone the angular-fis-kit repository and install the dependencies:
 
 ### Prerequisites
 
-You need git to clone the angular-seed repository. You can get git from
+You need git to clone the angular-fis-kit repository. You can get git from
 [http://git-scm.com/](http://git-scm.com/).
 
-We also use a number of node.js tools to initialize and test angular-seed. You must have node.js and
+We also use a number of node.js tools to initialize and test angular-fis-kit. You must have node.js and
 its package manager (npm) installed.  You can get them from [http://nodejs.org/](http://nodejs.org/).
 
 ### Clone 
 
-Clone the angular-seed repository using [git][git]:
+Clone the angular-fis-kit repository using [git][git]:
 
 ```
 git clone https://github.com/enimo/angular-fis-kit.git
@@ -73,11 +73,11 @@ Dapper/            		--> a backend PHP dapper framework, for Restful API or smar
 
 ## Testing
 
-There are two kinds of tests in the angular-seed application: Unit tests and End to End tests.
+There are two kinds of tests in the angular-fis-kit application: Unit tests and End to End tests.
 
 ### Running Unit Tests
 
-The angular-seed app comes preconfigured with unit tests. These are written in
+The angular-fis-kit app comes preconfigured with unit tests. These are written in
 [Jasmine][jasmine], which we run with the [Karma Test Runner][karma]. We provide a Karma
 configuration file to run them.
 

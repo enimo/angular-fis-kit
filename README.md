@@ -1,6 +1,6 @@
 # angular-fis-kit
 
-One new angular and fis development kits, Hummer Demo Via AngularJS and develop with FIS.
+One new angular and fis development kits, which integrated angular and FIS.
 
 
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
@@ -26,7 +26,7 @@ Clone the angular-fis-kit repository using [git][git]:
 
 ```
 git clone https://github.com/enimo/angular-fis-kit.git
-cd angular-fis-kit
+cd angular-fis-kit/
 ```
 
 
@@ -73,7 +73,7 @@ Dapper/            		--> a backend PHP dapper framework, for Restful API or smar
 
 ## Testing
 
-There are two kinds of tests in the angular-fis-kit application: Unit tests and End to End tests.
+There are two kinds of tests in the angular-fis-kit application: Unit tests.
 
 ### Running Unit Tests
 

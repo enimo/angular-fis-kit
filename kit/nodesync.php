@@ -9,8 +9,9 @@
 
 $auth_key = 'sample_code';
 
-if(empty(trim($_GET['auth'])) || trim($_GET['auth']) != $auth_key) {
-    echojson('Params incorrect :( ', 22001);
+if(empty($_GET['auth']) || $_GET['auth'] != $auth_key ) {
+    //echojson('Params incorrect :( ', 22009);
+    //待nodesync.npm包，同步auth_code
 }
 
 $op = $_POST['op'];

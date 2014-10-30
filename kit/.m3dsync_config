@@ -1,6 +1,6 @@
 {
   "path": "./",
   "ignore": "",
-  "host": "http://music.baidu.com/",
+  "host": "http://music.baidu.com?auth_key=sample_code",
   "pathto": "/home/enimo/"
 }

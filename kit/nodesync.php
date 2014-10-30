@@ -2,9 +2,16 @@
 // 2013-09-05
 // enimo
 // for nodejs local
-// npm install -g nodesync
+// USAGE:
+//		npm install -g nodesync
 //
 @error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
+$auth_key = 'sample_code';
+
+if(empty(trim($_GET['auth'])) || trim($_GET['auth']) != $auth_key) {
+    echojson('Params incorrect :( ', 22001);
+}
 
 $op = $_POST['op'];
 $fore_md5 = $_POST['md5'];

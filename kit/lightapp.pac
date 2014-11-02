@@ -1,4 +1,5 @@
 function FindProxyForURL(url, host) {
+    
     if (shExpMatch(url, "http://music.baidu.com/player/*") ||
             shExpMatch(url, "http://apps.bdimg.com/cloudaapi/lightapp.js*") ||
             shExpMatch(url, "http://apps.bdimg.com/cloudaapi/api-list.js*") ||
@@ -21,5 +22,7 @@ function FindProxyForURL(url, host) {
         #return "SOCKS5 127.0.0.1:7070; DIRECT";
 
     }
+
     return "DIRECT";
+    
 }

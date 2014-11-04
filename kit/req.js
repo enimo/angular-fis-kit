@@ -35,11 +35,11 @@ var require, define;
    * @access public
    * @return void
   **/
-  function require(deps, callback) {
+  function require(deps, callback, errback) {
     //第一次调用define函数后,require 会被修改为真正执行的函数
     throw new Error("No module definition");
   }
-  
+
 
   /**
    * Define function implement
@@ -114,5 +114,6 @@ var require, define;
 
   }
 
+  define.amd = {};
 
 })(window, document);

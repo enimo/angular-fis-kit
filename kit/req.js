@@ -136,7 +136,11 @@ var require, define;
 
   }
 
-
+  /*
+    兼容同步调用方法
+    e.g.:
+      var mod = require("mod");
+  */
   function requireSync(id) {
     //第一次调用define函数后,require 会被修改为真正执行的函数
     throw new Error("No module definition");

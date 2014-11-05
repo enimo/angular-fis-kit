@@ -60,6 +60,8 @@ var require, define;
 
   }
 
+
+
   function getHashMap(key) {
     // HACK: 统一线上环境添加的方法
     // 参考: http://phpjs.org/functions/realpath/
@@ -103,6 +105,38 @@ var require, define;
     }
     return key;
   };
+
+
+  /*
+  依赖关系映射表数据结构：
+  {
+    ‘mod/a’: { 
+      ‘deps’: [‘mod/c’, ‘mod/d’],
+      //‘child’: [‘mod/d’]
+    }
+  }
+  */
+  function handlerDepends(id, callback) {
+
+  }
+
+  
+  /*
+  合并以及MD5编译后映射表数据结构：
+  {
+    ‘mod/a’: {
+      ‘pkg’: ’/static/j/pkg_md5.js’,
+      ‘src’: ’/static/j/a_md5.js’
+    },
+    ‘mod/b’:{
+      ‘src’: ’/static/j/b_md5.js’
+    }
+  }
+  */
+  function loadResource(id, callback) {
+
+  }
+
 
   function requireSync(id) {
     //第一次调用define函数后,require 会被修改为真正执行的函数

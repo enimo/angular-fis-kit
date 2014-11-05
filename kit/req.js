@@ -111,8 +111,7 @@ var require, define;
   依赖关系映射表数据结构：
   {
     ‘mod/a’: { 
-      ‘deps’: [‘mod/c’, ‘mod/d’],
-      //‘child’: [‘mod/d’]
+      ‘deps’: [‘mod/c’, ‘mod/d’]
     }
   }
   */

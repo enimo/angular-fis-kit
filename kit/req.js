@@ -2,8 +2,8 @@
  * Simple AMD Loader
  *
  * @create: 2014.11.3
- * @update: 2014.11.4
- * @author: luoqin
+ * @update: 2014.11.6
+ * @author: enimo<enimong@gmail.com>
  * @refer: define, require, AMD Draft
  */
 

@@ -19,6 +19,13 @@ function FindProxyForURL(url, host) {
         
         #return "PROXY 172.22.149.109:8080";
         
+
+    }
+
+    if (shExpMatch(url, "http://music.baidu.com/player/*") ||
+            shExpMatch(url, "http://play.baidu.com/player/*")) {
+
+        return "PROXY 127.0.0.1:8080";
         #return "SOCKS5 127.0.0.1:7070; DIRECT";
 
     }

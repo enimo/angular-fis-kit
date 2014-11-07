@@ -3,8 +3,9 @@
  *
  * @create: 2014.11.3
  * @update: 2014.11.6
- * @author: enimo<enimong@gmail.com>
+ * @author: enimo <enimong@gmail.com>
  * @refer: define, require, AMD Draft
+ * @formatter&jslint: fecs xx.js --check 
  */
 
 var require, define;

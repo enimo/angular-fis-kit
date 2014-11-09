@@ -75,7 +75,7 @@
 
 
   function getHashMap(key) {
-    // same as php realpath
+    // same as php realpath()
         var realpath = function(path) {
         var arr = [];
 
@@ -152,7 +152,7 @@
     e.g.:
       var mod = require("mod");
   */
-  function requireSync(id) {
+  require['sync'] = function (id) {
     //第一次调用define函数后,require 会被修改为真正执行的函数
     throw new Error("No module definition");
   }

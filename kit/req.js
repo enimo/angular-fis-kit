@@ -68,15 +68,15 @@
 
 
   function load(url, callback) {
+    // body...
 
   }
 
 
 
   function getHashMap(key) {
-    // HACK: 统一线上环境添加的方法
-    // 参考: http://phpjs.org/functions/realpath/
-    var realpath = function(path) {
+    // same as php realpath
+        var realpath = function(path) {
         var arr = [];
 
         if (path.indexOf('://') !== -1) {

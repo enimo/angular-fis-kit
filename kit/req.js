@@ -66,14 +66,6 @@
   }
 
 
-
-  function load(url, callback) {
-    // body...
-
-  }
-
-
-
   function getHashMap(key) {
     // same as php realpath()
         var realpath = function(path) {

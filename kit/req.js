@@ -16,19 +16,22 @@
   var _module_map = {},
       _factory_map = {};
 
-  var head = document.getElementsByTagName('head')[0];
+  var head = doc.getElementsByTagName('head')[0];
    
   if (typeof define !== 'undefined') {
-        //If a define is already in play via another AMD loader,
-        //do not overwrite.
-        if (typeof define.alias !== 'undefined') {
-            return;
-        } else {
-            window['define']['alias'] = define;
-            window['require']['alias'] = require;
-        }
-        
-  } 
+      //If a define is already in play via another AMD loader,
+      //do not overwrite.
+      if (typeof define.alias !== 'undefined') {
+          return;
+      } else {
+          win['define']['alias'] = define;
+          win['require']['alias'] = require;
+      } 
+  } else {
+      win['define'] = define;
+      win['require'] = require;
+  }
+
 
   function hasProp(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop);

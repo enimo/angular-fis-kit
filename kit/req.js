@@ -8,9 +8,10 @@
  * @formatter&jslint: fecs xx.js --check 
  */
 
-var require, define;
 
 (function(win, doc){
+
+  var require, define;
 
   var _module_map = {},
       _factory_map = {};
@@ -20,7 +21,13 @@ var require, define;
   if (typeof define !== 'undefined') {
         //If a define is already in play via another AMD loader,
         //do not overwrite.
-        return;
+        if (typeof define.alias !== 'undefined') {
+            return;
+        } else {
+            window['define']['alias'] = define;
+            window['require']['alias'] = require;
+        }
+        
   } 
 
   function hasProp(obj, prop) {

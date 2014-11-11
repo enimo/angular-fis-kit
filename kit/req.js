@@ -34,7 +34,7 @@
 
 
   function hasProp(obj, prop) {
-    return Object.prototype.hasOwnProperty.call(obj, prop);
+      return Object.prototype.hasOwnProperty.call(obj, prop);
   }
 
 
@@ -47,8 +47,10 @@
    * @return void
   **/
   require = function (deps, callback, errback) {
-    //第一次调用define函数后,require 会被修改为真正执行的函数
-    throw new Error("No module definition");
+    
+
+      //第一次调用define函数后,require 会被修改为真正执行的函数
+      //throw new Error("No module definition");
   }
 
 
@@ -61,14 +63,18 @@
    * @access public
    * @return void
   **/
-  define = function (argument) {
-     // body...
+  define = function (id, deps, factory) {
+      // body...
+      require(deps, function(){
+              _factory_map[id] = factory;
+      });
+      
   }
 
 
   function getHashMap(key) {
-    // same as php realpath()
-        var realpath = function(path) {
+      // same as php realpath()
+      var realpath = function(path) {
         var arr = [];
 
         if (path.indexOf('://') !== -1) {

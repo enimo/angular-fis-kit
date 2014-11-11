@@ -1,5 +1,6 @@
 /**
  * Simple AMD Loader
+ * Baidu LightApp Loader Provider
  *
  * @create: 2014.11.3
  * @update: 2014.11.6
@@ -13,8 +14,8 @@
 
   var require, define;
 
-  var head = doc.getElementsByTagName('head')[0],
-      _module_map = {};
+  var _module_map = {},
+      head = doc.getElementsByTagName('head')[0],
    
   if (typeof _define_ !== 'undefined') {
       return;
@@ -22,7 +23,7 @@
       win['_define_'] = define;
       win['_require_'] = require;
   } 
-  
+
   /* 
   //防止污染用户后加载的AMD/CMD加载器，统一先使用: _define_, _require_
   if (typeof define !== 'undefined') {
@@ -121,7 +122,6 @@
       var mod = require.sync("mod");
   */
   require['sync'] = function (id) {
-
       var module, 
           exports, 
           deps,

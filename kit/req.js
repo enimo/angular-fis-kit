@@ -25,7 +25,7 @@
           return;
       } else {
           win['_define_'] = define;
-          win['_require_']= require;
+          win['_require_'] = require;
       } 
   } else {
       win['define'] = define;
@@ -46,7 +46,7 @@
    * @access public
    * @return void
   **/
-  function require(deps, callback, errback) {
+  require = function (deps, callback, errback) {
     //第一次调用define函数后,require 会被修改为真正执行的函数
     throw new Error("No module definition");
   }
@@ -61,7 +61,7 @@
    * @access public
    * @return void
   **/
-  function  define(argument) {
+  define = function (argument) {
      // body...
   }
 
@@ -139,6 +139,11 @@
 
   }
 
+
+  function regPlugin(id) {
+
+  }
+
   /*
     兼容同步调用方法
     e.g.:
@@ -150,9 +155,6 @@
   }
 
 
-  function regPlugin(id) {
-
-  }
 
   define.amd = {};
 

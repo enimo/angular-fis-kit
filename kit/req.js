@@ -16,6 +16,15 @@
   var head = doc.getElementsByTagName('head')[0],
       _module_map = {};
    
+  if (typeof _define_ !== 'undefined') {
+      return;
+  } else {
+      win['_define_'] = define;
+      win['_require_'] = require;
+  } 
+  
+  /* 
+  //防止污染用户后加载的AMD/CMD加载器，统一先使用: _define_, _require_
   if (typeof define !== 'undefined') {
       //If a define is already in play via another AMD loader,
       //do not overwrite.
@@ -30,6 +39,7 @@
       win['define'] = define;
       win['require'] = require;
   }
+  */
 
 
   /**
@@ -108,7 +118,7 @@
   /*
     兼容同步调用方法
     e.g.:
-      var mod = require("mod");
+      var mod = require.sync("mod");
   */
   require['sync'] = function (id) {
 

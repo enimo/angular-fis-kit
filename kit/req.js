@@ -13,10 +13,8 @@
 
   var require, define;
 
-  var _module_map = {},
-      _factory_map = {};
-
-  var head = doc.getElementsByTagName('head')[0];
+  var head = doc.getElementsByTagName('head')[0],
+      _module_map = {};
    
   if (typeof define !== 'undefined') {
       //If a define is already in play via another AMD loader,
@@ -28,29 +26,59 @@
           win['_require_'] = require;
       } 
   } else {
+      //此处如果在最前面加载，还是会污染requirejs的定义，考虑使用私有函数名
       win['define'] = define;
       win['require'] = require;
-  }
-
-
-  function hasProp(obj, prop) {
-      return Object.prototype.hasOwnProperty.call(obj, prop);
   }
 
 
   /**
    * require function implement
    *
-   * @param {Array} dependencies 依赖模块
+   * @param {Array} deps 依赖模块
    * @param {factory} callback 回调函数
    * @access public
    * @return void
   **/
   require = function (deps, callback, errback) {
-    
+      if (typeof deps === 'string') {
+          deps = [deps];
+      }
+      //Hack：兼容require的CMD模式
+      if (deps.length === 1 && arguments.length === 1) {
+          return require['sync'](deps.join(''));
+      }
+
+      var depsLen = deps.length,
+          loadCount = depsLen,
+          url;
+      if (depsLen) {
+          for(var i = 0; i < depsLen; i++) {
+              url = getHashMap(deps[i]);
+              loadResource(url, modLoaded);
+          }
+      } else {
+          allModsLoaded();
+      }
+
+      function modLoaded() {
+          if (! --loadCount) {
+              allModsLoaded();
+          }
+      }
+
+      function allModsLoaded() {
+          var exports = [];
+          for (var index = 0; index < depsLen; index++) {
+              exports.push(require['sync'](deps[index]));
+          }
+          callback && callback.apply(undefined, exports);
+          exports = null;
+      }
 
       //第一次调用define函数后,require 会被修改为真正执行的函数
       //throw new Error("No module definition");
+      //errback && errback("No module definition");
   }
 
 
@@ -58,61 +86,109 @@
    * Define function implement
    *
    * @param {String} id 模块名
-   * @param {Array} dependencies 依赖模块
+   * @param {Array} deps 依赖模块
    * @param {factory} factory 模块函数
    * @access public
    * @return void
   **/
   define = function (id, deps, factory) {
-      // body...
-      require(deps, function(){
-              _factory_map[id] = factory;
-      });
-      
+      var mod = {};
+
+      mod['id'] = id;
+      mod['factory'] = factory;
+      mod['deps'] = deps;
+
+      _module_map[id] = mod;
+
+      /*require(deps, function(){
+          _factory_map[id] = factory;
+      });*/
   }
 
+  /*
+    兼容同步调用方法
+    e.g.:
+      var mod = require("mod");
+  */
+  require['sync'] = function (id) {
 
+      var module, 
+          exports, 
+          deps,
+          args = [];
+
+      if (!hasProp(_module_map, id)) {
+          throw new Error('Required unknown module "' + id + '"');
+      }
+
+      module = _module_map[id];
+      if (hasProp(module, "exports")) {
+          return module.exports;
+      }
+
+      module['exports'] = exports = {};
+      deps =  module.deps;
+
+      for(var depsLen =deps.length, i = 0; i < depsLen; i++) {
+          dep = deps[i];
+          args.push(dep === "module" ? module : (dep === "exports" ? exports : require['sync'](dep)));
+      }
+
+      var ret = module.factory.apply(undefined, args);
+      if (ret !== undefined && ret !== exports) {
+          module.exports = ret;
+      }
+
+      return module.exports;
+  }
+
+  //工具方法
+  function hasProp(obj, prop) {
+      return Object.prototype.hasOwnProperty.call(obj, prop);
+  }
+
+  //生成realpath，并得到md5后的url路径
   function getHashMap(key) {
       // same as php realpath()
       var realpath = function(path) {
-        var arr = [];
+          var arr = [];
 
-        if (path.indexOf('://') !== -1) {
-            return path;
-        }
+          if (path.indexOf('://') !== -1) {
+              return path;
+          }
 
-        arr = path.split('/');
-        path = [];
+          arr = path.split('/');
+          path = [];
 
-        for (var k = 0, len = arr.length; k < len; k++) {
-            if (arr[k] == '.') {
-                continue;
-            }
-            if (arr[k] == '..') {
-                if (path.length >= 2) {
-                    path.pop();
-                }
-            } else {
-                if (!path.length || (arr[k] !== '')) {
-                    path.push(arr[k]);
-                }
-            }
-        }
+          for (var k = 0, len = arr.length; k < len; k++) {
+              if (arr[k] == '.') {
+                  continue;
+              }
+              if (arr[k] == '..') {
+                  if (path.length >= 2) {
+                      path.pop();
+                  }
+              } else {
+                  if (!path.length || (arr[k] !== '')) {
+                      path.push(arr[k]);
+                  }
+              }
+          }
 
-        path = path.join('/');
+          path = path.join('/');
 
-        return path.indexOf('/') === 0 ? path : '/' + path;
-    };
+          return path.indexOf('/') === 0 ? path : '/' + path;
+      };
 
-    key = realpath(key);
+      key = realpath(key);
 
-    if (typeof _MD5_HASHMAP !== 'undefined') {
-        var url = _MD5_HASHMAP[key];
-        if (url) {
-            return url;
-        }
-    }
-    return key;
+      if (typeof _MD5_HASHMAP !== 'undefined') {
+          var url = _MD5_HASHMAP[key];
+          if (url) {
+              return url;
+          }
+      }
+      return key;
   };
 
 
@@ -141,25 +217,15 @@
     }
   }
   */
-  function loadResource(id, callback) {
+  function loadResource(url, callback) {
 
   }
 
 
+  // under implement
   function regPlugin(id) {
 
   }
-
-  /*
-    兼容同步调用方法
-    e.g.:
-      var mod = require("mod");
-  */
-  require['sync'] = function (id) {
-    //第一次调用define函数后,require 会被修改为真正执行的函数
-    throw new Error("No module definition");
-  }
-
 
 
   define.amd = {};

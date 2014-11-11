@@ -21,11 +21,11 @@
   if (typeof define !== 'undefined') {
       //If a define is already in play via another AMD loader,
       //do not overwrite.
-      if (typeof define.alias !== 'undefined') {
+      if (typeof _define_ !== 'undefined') {
           return;
       } else {
-          win['define']['alias'] = define;
-          win['require']['alias'] = require;
+          win['_define_'] = define;
+          win['_require_']= require;
       } 
   } else {
       win['define'] = define;

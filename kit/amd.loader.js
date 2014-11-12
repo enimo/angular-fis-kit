@@ -16,7 +16,7 @@
     var require, define;
 
     var _module_map = {}, //已加载并define的模块，key为模块名(id)
-        _load_map = {}; //已加载的js资源，key为资源URL
+        _loaded_map = {}; //已加载的js资源，key为资源URL
     
     //防止污染用户后加载的AMD/CMD加载器，统一先使用: _define_, _require_
     if (typeof _define_ !== 'undefined') {
@@ -25,7 +25,6 @@
         win['_define_'] = define;
         win['_require_'] = require;
     } 
-
 
     /**
      * Define function implement
@@ -48,7 +47,6 @@
         };
 
     }
-
 
     /**
      * require function implement
@@ -99,12 +97,15 @@
         //throw new Error("No module definition");
     }
 
-
-    /*
-      兼容同步调用方法
-      e.g.:
-        var mod = require.sync("mod");
-    */
+    /**
+     * require function implement
+     * 兼容CMD同步调用:
+     *    var mod = require.sync("mod");
+     *
+     * @param {String} id 依赖模块
+     * @access public
+     * @return void
+    **/
     require['sync'] = function (id) {
         var module, 
             exports, 
@@ -135,8 +136,11 @@
 
         return module.exports;
     }
-
-    //工具方法
+ 
+    /**
+     * Toolkit func, same as in, key_exists
+     * @return {boolean}
+    **/
     function hasProp(obj, prop) {
         return Object.prototype.hasOwnProperty.call(obj, prop);
     }
@@ -159,9 +163,10 @@
             for (var i = 0; i < ids.length; i++) {
                 var id = realpath(ids[i]);
 
-                if(typeof _CLOUDA_HASHMAP.deps !== undefined && _CLOUDA_HASHMAP.deps[id]){
-                    var deps_ids = _CLOUDA_HASHMAP.deps[id]['deps']; //得到所有依赖资源
-                    arguments.callee(deps_ids);
+                if(typeof _CLOUDA_HASHMAP.deps !== 'undefined'){
+                    var mod = _CLOUDA_HASHMAP.deps[id] || {},
+                        deps_ids = mod['deps']; //递归得到所有依赖资源
+                    deps_ids && arguments.callee(deps_ids);
                 }
 
                 if (typeof _CLOUDA_HASHMAP_.res !== 'undefined') {
@@ -179,9 +184,8 @@
         return urls;
     }
 
-    
     /**
-     * same as php realpath, 获取绝对路径
+     * Same as php realpath, 获取绝对路径
      * @params {String} path
      * @return {String} realpath
     **/
@@ -225,7 +229,6 @@
     function handlerDepends(id, callback) {
 
     }
-
     
     /**
      * 根据给出urls数组，加载资源，大于1时选用combo
@@ -249,8 +252,8 @@
             src = domain + '/cloudaapi/api-list.js?a=' + encodeURIComponent(urls.join(','));
         }
 
-        if (! (src in _load_map))  {//为外部调用loadRes()做缓存拦截，AMD已在require层拦截
-            _load_map[src] = true;
+        if (! (src in _loaded_map))  {//为外部调用loadRes()做缓存拦截，AMD已在require层拦截
+            _loaded_map[src] = true;
 
             var head = doc.getElementsByTagName('head')[0],
                 script = doc.createElement('script');
@@ -275,12 +278,10 @@
 
     }
 
-
     // under implement
     function regPlugin(id) {
 
     }
-
 
     define.amd = {};
 

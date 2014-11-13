@@ -217,18 +217,6 @@
 
         return path.indexOf('/') === 0 ? path : '/' + path;
     };
-
-    /*
-    依赖关系映射表数据结构：
-    {
-      'mod/a': { 
-        'deps': ['mod/c', 'mod/d']
-      }
-    }
-    */
-    function handlerDepends(id, callback) {
-
-    }
     
     /**
      * 根据给出urls数组，加载资源，大于1时选用combo
@@ -271,6 +259,18 @@
                 }
             }
         }
+
+    }
+
+    /*
+    依赖关系映射表数据结构：
+    {
+      'mod/a': { 
+        'deps': ['mod/c', 'mod/d']
+      }
+    }
+    */
+    function handlerDepends(id, callback) {
 
     }
 

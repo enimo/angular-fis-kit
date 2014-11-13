@@ -6,7 +6,8 @@
  * @create: 2014.11.3
  * @update: 2014.11.6
  * @author: enimo <enimong@gmail.com>
- * @refer: define, require, AMD Draft
+ * @refer: define, require, requirejs
+ * AMD Draft: https://github.com/amdjs/amdjs-api/wiki/AMD
  * @formatter & jslint: fecs xx.js --check 
  */
 
@@ -38,6 +39,12 @@
     define = function (id, deps, factory) {
         if (hasProp(_module_map, id)) {
             return;
+        }
+
+        //无依赖define
+        if (isFunction(deps)) { //!isArray(deps)
+            factory = deps;
+            deps = null;
         }
 
         _module_map[id] = {
@@ -136,14 +143,6 @@
 
         return module.exports;
     };
- 
-    /**
-     * Toolkit func, same as in, key_exists
-     * @return {boolean}
-    **/
-    function hasProp(obj, prop) {
-        return Object.prototype.hasOwnProperty.call(obj, prop);
-    }
 
     /**
      * 根据模块名得到md5或pkg后的url路径
@@ -183,6 +182,50 @@
 
         return urls;
     }
+    
+    /**
+     * 根据给出urls数组，加载资源，大于1时选用combo
+     * @params {function} callback
+     * @params {Array} urls
+     * @return void
+    **/
+    function loadResource(urls, callback) {
+
+        var domain, src;
+
+        if (window.location.protocol === "http:") {
+            domain = "http://apps.bdimg.com";
+        } else {
+            domain = "https://openapi.baidu.com";
+        }
+
+        src = (urls.length === 1) ? urls[0] : '/cloudaapi/api-list.js?a=' + encodeURIComponent(urls.join(','));
+
+        if (! (src in _loaded_map))  {//为外部调用loadRes()做缓存拦截，AMD已在require层拦截
+            _loaded_map[src] = true;
+
+            var head = doc.getElementsByTagName('head')[0],
+                script = doc.createElement('script');
+
+            script.type = 'text/javascript';
+            script.src = domain + src;
+            head.appendChild(script);
+
+            if (isFunction(callback)) {
+                if (doc.addEventListener) {
+                    script.addEventListener("load", callback, false);
+                } else { 
+                    script.onreadystatechange = function() {
+                        if (/loaded|complete/.test(script.readyState)) {
+                            script.onreadystatechange = null;
+                            callback();
+                        }
+                    };
+                }
+            }
+        }
+
+    }
 
     /**
      * Same as php realpath, 获取绝对路径
@@ -216,51 +259,20 @@
         path = path.join('/');
 
         return path.indexOf('/') === 0 ? path : '/' + path;
-    };
-    
-    /**
-     * 根据给出urls数组，加载资源，大于1时选用combo
-     * @params {function} callback
-     * @params {Array} urls
-     * @return void
-    **/
-    function loadResource(urls, callback) {
-
-        var domain, src;
-
-        if (window.location.protocol === "http:") {
-            domain = "http://apps.bdimg.com";
-        } else {
-            domain = "https://openapi.baidu.com";
-        }
-
-        src = (urls.length === 1) ? urls[0] : '/cloudaapi/api-list.js?a=' + encodeURIComponent(urls.join(','));
-
-        if (! (src in _loaded_map))  {//为外部调用loadRes()做缓存拦截，AMD已在require层拦截
-            _loaded_map[src] = true;
-
-            var head = doc.getElementsByTagName('head')[0],
-                script = doc.createElement('script');
-
-            script.type = 'text/javascript';
-            script.src = domain + src;
-            head.appendChild(script);
-
-            if (typeof callback === 'function') {
-                if (doc.addEventListener) {
-                    script.addEventListener("load", callback, false);
-                } else { 
-                    script.onreadystatechange = function() {
-                        if (/loaded|complete/.test(script.readyState)) {
-                            script.onreadystatechange = null;
-                            callback();
-                        }
-                    };
-                }
-            }
-        }
-
     }
+
+    /**
+     * Helper function, same as in, key_exists, typeof 
+     * @return {boolean}
+    **/
+    function hasProp(obj, prop) {
+        return Object.prototype.hasOwnProperty.call(obj, prop);
+    }
+
+    function isFunction(obj) {
+        return Object.prototype.toString.call(obj) === '[object Function]';
+    }
+
 
     /*
     依赖关系映射表数据结构：
@@ -274,11 +286,13 @@
 
     }
 
-    // under implement
+    // undergoing
     function regPlugin(id) {
-
+        //_plugins_map.push(id);
     }
 
     define.amd = {};
+
+    define.version = '0.8';
 
 })(window, document);

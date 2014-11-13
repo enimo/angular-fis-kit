@@ -46,7 +46,7 @@
           factory: factory;
         };
 
-    }
+    };
 
     /**
      * require function implement
@@ -95,7 +95,7 @@
         //errback && errback("No module definition");
         //第一次调用define函数后,require 会被修改为真正执行的函数
         //throw new Error("No module definition");
-    }
+    };
 
     /**
      * require function implement
@@ -135,7 +135,7 @@
         }
 
         return module.exports;
-    }
+    };
  
     /**
      * Toolkit func, same as in, key_exists
@@ -148,7 +148,7 @@
     /**
      * 根据模块名得到md5或pkg后的url路径
      * 并根据依赖表同时加载所有依赖模块
-     * @param {String, Array} ids 模块名
+     * @param {String, Array} ids 模块名或模块路径，url etc.
      * @access public
      * @return {Array} urls
     **/
@@ -246,11 +246,7 @@
             domain = "https://openapi.baidu.com";
         }
 
-        if (urls.length === 1) {
-            src = domain + urls[0];
-        } else {
-            src = domain + '/cloudaapi/api-list.js?a=' + encodeURIComponent(urls.join(','));
-        }
+        src = (urls.length === 1) ? urls[0] : '/cloudaapi/api-list.js?a=' + encodeURIComponent(urls.join(','));
 
         if (! (src in _loaded_map))  {//为外部调用loadRes()做缓存拦截，AMD已在require层拦截
             _loaded_map[src] = true;
@@ -259,7 +255,7 @@
                 script = doc.createElement('script');
 
             script.type = 'text/javascript';
-            script.src = src;
+            script.src = domain + src;
             head.appendChild(script);
 
             if (typeof callback === 'function') {

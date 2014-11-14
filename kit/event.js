@@ -11,7 +11,9 @@
 
     var on, emit;
 
-    on = function (name, cb) {
+    function Events() {}
+
+    Events.prototype.on = function (name, cb) {
         var cbs = this.events[name];
         if (!cbs) {
             cbs = this.events[name] = [];
@@ -19,7 +21,7 @@
         cbs.push(cb);
     };
 
-    emit = function (name, evt) {
+    Event.prototype.emit = function (name, evt) {
         each(this.events[name], function (cb) {
             cb(evt);
         });
@@ -30,6 +32,20 @@
             delete this.events[name];
         }
     };
+
+    Events.prototype.trigger = Events.prototype.emit;
+
+    // Mix `Events` to object instance or Class function.
+    Events.mixTo = function(receiver) {
+        receiver = isFunction(receiver) ? receiver.prototype : receiver;
+        var proto = Events.prototype;
+
+        for (var p in proto) {
+            if (hasProp(proto, p)) {
+                receiver[p] = proto[p];
+            }
+        }
+    }
 
     /**
      * Helper function for iterating over an array. If the func returns
@@ -53,6 +69,7 @@
             return fn.apply(obj, arguments);
         };
     }
+
 
     /**
      * Toolkit func, same as in, key_exists, typeof 

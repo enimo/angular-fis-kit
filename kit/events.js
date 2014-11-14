@@ -7,9 +7,9 @@
  */
 
 
-(function(win, doc){
+(function(win) {
 
-    var on, emit;
+    //var on, emit;
 
     function Events() {}
 
@@ -46,6 +46,8 @@
             }
         }
     }
+
+    win['Events'] = Events;
 
     /**
      * Helper function for iterating over an array. If the func returns
@@ -87,4 +89,4 @@
         return Object.prototype.toString.call(obj) === '[object Array]';
     }
 
-})(window, document);
+})(window);

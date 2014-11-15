@@ -3,13 +3,12 @@
  *
  * @create: 2014.09.12
  * @author: enimo <enimong@gmail.com>
+ * @formatter & jslint: fecs xx.js --check 
  *
  */
 
 
 (function(win) {
-
-    //var on, emit;
 
     function Events() {}
 

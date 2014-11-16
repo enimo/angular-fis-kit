@@ -274,14 +274,15 @@
     }
 
 
-    /*
-    依赖关系映射表数据结构：
-    {
-      'mod/a': { 
-        'deps': ['mod/c', 'mod/d']
-      }
-    }
-    */
+    /**
+     * 依赖关系映射表数据结构：
+     *   {
+     *     'mod/a': { 
+     *       'deps': ['mod/c', 'mod/d']
+     *     }
+     *   }
+     * 
+    **/
     function handlerDepends(id, callback) {
 
     }

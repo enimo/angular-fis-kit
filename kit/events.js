@@ -87,5 +87,10 @@
     function isArray(obj) {
         return Object.prototype.toString.call(obj) === '[object Array]';
     }
+    //封装日志函数
+    function log() {
+        var apc = Array.prototype.slice; //same as [].slice; Let Object{} to Array[]
+        console && console.log.apply(console, apc.call(arguments)); //return String, same like native console.log(), so choose it.
+    }
 
 })(window);
